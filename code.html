@@ -2,7 +2,7 @@
 <html lang="en" class="h-100">
 
 <head>
-    <title>[App Name]: A Coding Project by Jeremy Steward</title>
+    <title>TACO CAT: A Coding Project by Jeremy Steward</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -46,7 +46,7 @@
                         <a class="nav-link active" aria-current="page" href="code.html">The Code</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" target="_blank" href="https://github.com/Alexandersaur/">Git Repo</a>
+                        <a class="nav-link" target="_blank" href="https://github.com/Alexandersaur/Tacocat">Git Repo</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" target="_blank" href="https://www.jeremysteward.com">About Me</a>
@@ -60,26 +60,66 @@
     <main class="flex-shrink-0">
         <div class="jumbotron container-fluid">
             <div class="container text-white text-center logofont">
-                <p class="mt-10"><span id="span1">[App Name]</span></p>
+                <p class="mt-10"><span id="span1">TACO CAT</span></p>
             </div>
         </div>
         <div class="container py-4 px-5 mt-0 bodyfont">
-            <h2 class="border-1 border-bottom border-dark">The Code for [App Name]</h2>
+            <h2 class="border-1 border-bottom border-dark">The Code for TACO CAT</h2>
             <div class="row row-cols-1 row-cols-lg-2">
                 <div class="col-lg-8">
                     <pre class="line-numbers">
                         <code class="language-javascript">
-                            //-- Call Hello World --//
-                            function HelloWorld(){
-                                alert("Hello World");
-                            }
+                            //--Get user string from the page (controller function)--//
+                            function getValue(){
+                                //--Make sure the alert is invisible--//
+                               document.getElementById("alert").classList.add("invisible");
+                               let userString = document.getElementById("userString").value;
+                               //--Check for a palindrome--//
+                               let returnObj = checkPalindrome(userString);
+                               //--Display the results to the screen--//
+                               displayMessage(returnObj);
+                           }
+                           
+                           //--Reverse the string and check for palindrome (logic function)--//
+                           function checkPalindrome(userString){
+                               //--Ensure only alphanumeric characters are compared, no spaces or symbols--//
+                               userString = userString.toLowerCase();
+                               let regex = /[^a-z0-9]/gi;
+                               userString = userString.replace(regex,"");
+                               //--Reverse the cleaned string using a for loop--//
+                               let revString = [];
+                               let returnObj = {};
+                               for (let index = userString.length - 1; index >= 0; index--) {
+                                   revString += userString[index];
+                               }
+                               //--Determine if the string is a palindrome and update the object msg property--//
+                               if(revString == userString){
+                                   returnObj.msg = "SUCCESS! You entered a palindrome!"
+                               }else{
+                                   returnObj.msg = "Sorry, you did not enter a palindrome."
+                               }
+                               returnObj.reversed = revString;
+                               return returnObj;
+                           }
+                           
+                           //--Show the result to the user (display function)--//
+                           function displayMessage(returnObj){
+                               //--Write to page--//
+                               document.getElementById("alertHeader").innerHTML = returnObj.msg;
+                               document.getElementById("msg").innerHTML = `Your phrase in reverse is: ${returnObj.reversed}`;
+                               //--Show the alert box--//
+                               document.getElementById("alert").classList.remove("invisible");
+                           }
                         </code>
                     </pre>
                 </div>
                 <div class="col-lg-4">
-                    <p>The code is structured in one function.</p>
-                    <h5>Hello World</h5>
-                    <p>Hello World is a function that displays an alert with a message of "Hello World"</p>
+                    <h5>getValue()</h5>
+                    <p>This is a function that was created to collect the string information from the user via the input element contained within the form. It will display the final result after calling the other two functions to perform their actions.</p>
+                    <h5>checkPalindrome()</h5>
+                    <p>This is a function that was designed to create an Object containing 'reversed' and 'message' properties. First it cleans the user input by making everything lower case and removing spaces and special charactera via the use of RegularExpressions. Then it reverses the string by pinpointing the final index in the Array, subtracting 1 from the Length property, and using a For Loop to decrement the indicies within the locally-scoped Array until it has made a record of each value in reverse order. After comparing the reversed string to the original one, the object will generate a 'message' property based on whether or not the two strings are identical.</p>
+                    <h5>displayMessage()</h5>
+                    <p>This final function was written to display the result to the user. Specifically, it incorporates the classList.remove property in order to get rid of the "invisible" class which is preventing the results section from being on display before the user has submitted their string.</p>
                 </div>
             </div>
         </div>
